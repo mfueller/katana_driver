@@ -1,0 +1,36 @@
+<package>
+  <name>katana_tutorials</name>
+  <version>0.1.0</version>
+  <description>
+
+     This package contains test and demo programs for the katana_driver stack.
+
+  </description>
+  <author>Martin Günther</author>
+  <maintainer email="look@github.com">Martin Günther</maintainer>
+  <license>GPL</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>actionlib</build_depend>
+
+  <!-- JointTrajectory message -->
+  <build_depend>trajectory_msgs</build_depend>
+
+  <!-- FollowJointTrajectory action -->
+  <build_depend>control_msgs</build_depend>
+
+  <!-- PR2's JointTrajectory action -->
+  <build_depend>control_msgs</build_depend>
+
+  <!-- JointState message -->
+  <build_depend>sensor_msgs</build_depend>
+
+  <!-- trajectory filtering-->
+  <build_depend>trajectory_filter_servery</build_depend>
+  <build_depend>katana_trajectory_filter</build_depend>
+  <build_depend>moveit_msgs</build_depend>
+
+</package>
+

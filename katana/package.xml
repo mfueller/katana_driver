@@ -1,0 +1,66 @@
+<package>
+  <name>katana</name>
+  <version>0.1.0</version>
+  <description>
+
+    <p>
+    This package provides ROS interfaces to the Neuronics Katana 450 arm.
+    It wraps the <a href="/wiki/kni">KNI</a> library for low-level communication
+    with the Katana arm.
+    </p>
+
+    <p>
+    GPL license due to the KNI library.
+    </p>
+
+  </description>
+  <author>Martin Günther</author>
+  <maintainer email="look@github.com">Martin Günther</maintainer>
+  <license>GPL</license>
+  <url>http://ros.org/wiki/katana</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>kni</build_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>roslib</build_depend>
+  <build_depend>kni</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>std_srvs</build_depend>
+
+  <!-- for JointStatePublisher -->
+  <build_depend>sensor_msgs</build_depend>
+
+  <!-- for JointTrajectoryActionController -->
+  <build_depend>actionlib</build_depend>
+  <build_depend>control_msgs</build_depend>
+  <build_depend>control_msgs</build_depend>
+  <build_depend>trajectory_msgs</build_depend>
+  <build_depend>urdf</build_depend>
+
+  <!-- for KNIKinematics -->
+  <build_depend>moveit_msgs</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>armadillo</build_depend>
+
+  <!-- for katana_gripper_grasp_controller -->
+<!--  not catkinized
+<build_depend>object_manipulation_msgs</build_depend>
+-->
+  <!-- for JointMovementActionController -->
+  <build_depend>katana_msgs</build_depend>
+
+  <!-- for JointMovementActionController -->
+  <build_depend>moveit_msgs</build_depend>
+
+
+  <run_depend>roscpp</run_depend>
+  <run_depend>kni</run_depend>
+  <run_depend>tf</run_depend>
+  <run_depend>katana_msgs</run_depend>
+  <run_depend>actionlib</run_depend>
+  <run_depend>roslib</run_depend>
+  <run_depend>urdf</run_depend>
+
+</package>

@@ -1,0 +1,30 @@
+<package>
+  <name>katana_joint_movement_adapter</name>
+  <version>0.1.0</version>
+  <description>
+
+    Provides a node that converts a katana_msgs/JointMovement to a control_msgs/JointTrajectory.
+    When running on real hardware, the katana package provides a JointMovement action. This node only
+    needs to be run when running on the Gazebo simulator.
+
+  </description>
+  <author>Martin Günther</author>
+  <maintainer email="look@github.com">Martin Günther</maintainer>
+
+  <license>GPL</license>
+  <url>http://ros.org/wiki/katana_joint_movement_adapter</url>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>actionlib</build_depend>
+  <build_depend>katana_msgs</build_depend>
+  <build_depend>control_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>moveit_msgs</build_depend>
+<!--  <build_depend>joint_trajectory_generator</build_depend> -->
+  <build_depend>urdf</build_depend>
+
+</package>
+
+

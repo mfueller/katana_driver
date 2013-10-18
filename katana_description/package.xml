@@ -1,0 +1,24 @@
+<package>
+  <name>katana_description</name>
+  <version>0.1.0</version>
+  <description>
+
+     This package contains an URDF description of the Katana arm and all supporting mesh files.
+
+  </description>
+  <author>Martin Günther</author>
+  <maintainer email="look@github.com">Martin Günther</maintainer>
+
+  <license>BSD</license>
+  <url>http://ros.org/wiki/katana_description</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>urdf</build_depend>
+  <build_depend>convex_decomposition</build_depend>
+  <build_depend>ivcon</build_depend>
+  <build_depend>pr2_gazebo_plugins</build_depend>
+
+</package>
+
+

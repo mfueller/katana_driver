@@ -1,0 +1,28 @@
+<package>
+  <name>katana_kinect_calibration</name>
+  <version>0.1.0</version>
+  <description>
+
+    <p>
+    This package uses the <a href="/wiki/ar_kinect">ar_kinect</a>
+    module to calibrate a fixed joint between the base link and
+    a Kinect camera which monitors a Katana arm equipped with an AR code.
+    </p>
+
+  </description>
+  <author>Michael Goerner</author>
+  <maintainer email="look@google.com">Michael Goerner</maintainer>
+
+  <license>GPL</license>
+ 
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>rospy</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>ar_pose</build_depend>
+  <build_depend>ar_kinect</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>actionlib</build_depend>
+  <build_depend>katana_msgs</build_depend>
+
+</package>
