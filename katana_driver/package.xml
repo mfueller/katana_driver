@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package>
+  <name>katana_driver</name>
+  <version>0.1.0</version>
+  <description>
+    This stack contains hardware drivers, Gazebo plugins and other basic
+    functionalities for the <a href="http://neuronics.ch/cms_en/web/index.php?lid=54">Neuronics
+    Katana family of robot arms</a>. Specifically, it provides:
+    <ul>
+      <li>JointTrajectory and FollowJointTrajectory execution on the physical
+        arm (packages katana, kni, katana_trajectory_filter, katana_msgs),</li>
+      <li>simulation of the Katana arm in Gazebo (packages
+        katana_gazebo_plugins, katana_arm_gazebo),</li>
+      <li>URDF descriptions (package katana_description),</li>
+      <li>simple teleoperation (packages katana_teleop,
+        katana_joint_movement_adapter), and</li>
+      <li>some demo programs (package katana_tutorials).</li>
+    </ul>
+  </description>
+  <maintainer email="look@github.com">Martin Günther, Henning Deeken</maintainer>
+  <license>TBD</license>
+  <export>
+   <metapackage/>
+ </export>
+</package>
+
