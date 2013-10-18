@@ -49,9 +49,9 @@ KatanaTeleopPS3::KatanaTeleopPS3() :
   ros::service::waitForService(fk_service);
   ros::service::waitForService(ik_solver_info);
 
-  ik_client = n_.serviceClient<kinematics_msgs::GetConstraintAwarePositionIK> (ik_service);
-  fk_client = n_.serviceClient<kinematics_msgs::GetPositionFK> (fk_service);
-  info_client = n_.serviceClient<kinematics_msgs::GetKinematicSolverInfo> (ik_solver_info);
+  ik_client = n_.serviceClient<moveit_msgs::GetConstraintAwarePositionIK> (ik_service);
+  fk_client = n_.serviceClient<moveit_msgs::GetPositionFK> (fk_service);
+  info_client = n_.serviceClient<moveit_msgs::GetKinematicSolverInfo> (ik_solver_info);
 
   js_sub_ = n_.subscribe("joint_states", 1000, &KatanaTeleopPS3::jointStateCallback, this);
 
@@ -69,8 +69,8 @@ void KatanaTeleopPS3::jointStateCallback(const sensor_msgs::JointState::ConstPtr
   incoming_joint_state_.name = js->name;
   incoming_joint_state_.position = js->position;
 
-  kinematics_msgs::GetPositionFK::Request fk_request;
-  kinematics_msgs::GetPositionFK::Response fk_response;
+  moveit_msgs::GetPositionFK::Request fk_request;
+  moveit_msgs::GetPositionFK::Response fk_response;
 
   fk_request.header.frame_id = "katana_base_link";
   fk_request.fk_link_names.resize(1);
@@ -167,13 +167,14 @@ void KatanaTeleopPS3::ps3joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
   }
 
   // define the service messages
-  kinematics_msgs::GetConstraintAwarePositionIK::Request gcapik_req;
-  kinematics_msgs::GetConstraintAwarePositionIK::Response gcapik_res;
-  gcapik_req.timeout = ros::Duration(5.0);
+  moveit_msgs::GetConstraintAwarePositionIK::Request gcapik_req;
+  moveit_msgs::GetConstraintAwarePositionIK::Response gcapik_res;
+  gcapik_req.ik_request.timeout = ros::Duration(5.0);
 
   gcapik_req.ik_request.pose_stamped = goalPose;
   gcapik_req.ik_request.robot_state.joint_state = currentState;
-  gcapik_req.ik_request.ik_seed_state.joint_state = currentState;
+  //FIXME: are the any other seed options?
+  //gcapik_req.ik_request.ik_seed_state.joint_state = currentState;
 
   if (ik_client.call(gcapik_req, gcapik_res))
   {

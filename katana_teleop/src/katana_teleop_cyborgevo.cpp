@@ -52,9 +52,9 @@ KatanaTeleopCyborgEvo::KatanaTeleopCyborgEvo() :
 
   ROS_INFO("KatanaTeleopCyborgEvo connected to all the services...");
 
-  ik_client = n_.serviceClient<kinematics_msgs::GetConstraintAwarePositionIK> (ik_service);
-  fk_client = n_.serviceClient<kinematics_msgs::GetPositionFK> (fk_service);
-  // info_client = n_.serviceClient<kinematics_msgs::GetKinematicSolverInfo> (ik_solver_info);
+  ik_client = n_.serviceClient<moveit_msgs::GetConstraintAwarePositionIK> (ik_service);
+  fk_client = n_.serviceClient<moveit_msgs::GetPositionFK> (fk_service);
+  // info_client = n_.serviceClient<moveit_msgs::GetKinematicSolverInfo> (ik_solver_info);
 
   js_sub_ = n_.subscribe("joint_states", 1000, &KatanaTeleopCyborgEvo::jointStateCallback, this);
 
@@ -85,8 +85,8 @@ void KatanaTeleopCyborgEvo::jointStateCallback(const sensor_msgs::JointState::Co
     initialState = incoming_joint_state_;
 
 
-  kinematics_msgs::GetPositionFK::Request fk_request;
-  kinematics_msgs::GetPositionFK::Response fk_response;
+  moveit_msgs::GetPositionFK::Request fk_request;
+  moveit_msgs::GetPositionFK::Response fk_response;
 
   fk_request.header.frame_id = "katana_base_link";
   fk_request.fk_link_names.resize(1);
@@ -224,14 +224,15 @@ void KatanaTeleopCyborgEvo::cyborgevoCallback(const sensor_msgs::Joy::ConstPtr& 
   {
 
     // define the service messages
-    kinematics_msgs::GetConstraintAwarePositionIK::Request gcapik_req;
-    kinematics_msgs::GetConstraintAwarePositionIK::Response gcapik_res;
+    moveit_msgs::GetConstraintAwarePositionIK::Request gcapik_req;
+    moveit_msgs::GetConstraintAwarePositionIK::Response gcapik_res;
 
     gcapik_req.ik_request.ik_link_name = "katana_gripper_tool_frame";
     gcapik_req.ik_request.pose_stamped = goalPose;
     gcapik_req.ik_request.robot_state.joint_state = currentState;
-    gcapik_req.ik_request.ik_seed_state.joint_state = currentState;
-    gcapik_req.timeout = ros::Duration(5.0);
+    //FIXME: are there any other id_seed_state options
+    //gcapik_req.ik_request.ik_seed_state.joint_state = currentState;
+    gcapik_req.ik_request.timeout = ros::Duration(5.0);
 
     ROS_INFO("KatanaTeleopCyborgEvo calls the IK Client...");
 

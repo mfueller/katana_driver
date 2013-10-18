@@ -29,9 +29,9 @@
 #include <sensor_msgs/Joy.h>
 #include <sensor_msgs/JointState.h>
 #include <geometry_msgs/PoseStamped.h>
-#include <kinematics_msgs/GetPositionFK.h>
-#include <kinematics_msgs/GetConstraintAwarePositionIK.h>
-#include <kinematics_msgs/GetKinematicSolverInfo.h>
+#include <moveit_msgs/GetPositionFK.h>
+#include <moveit_msgs/GetConstraintAwarePositionIK.h>
+#include <moveit_msgs/GetKinematicSolverInfo.h>
 
 #include <katana_msgs/JointMovementAction.h>
 #include <actionlib/server/simple_action_server.h>

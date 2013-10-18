@@ -30,7 +30,9 @@ namespace katana
 {
 
 KatanaTeleopKey::KatanaTeleopKey() :
-  action_client("katana_arm_controller/joint_movement_action", true), gripper_("gripper_grasp_posture_controller", true)
+  action_client("katana_arm_controller/joint_movement_action", true) 
+  //FIXME: add gripper action client
+  // gripper_("gripper_grasp_posture_controller", true)
 {
   ROS_INFO("KatanaTeleopKey starting...");
   ros::NodeHandle n_;
@@ -47,7 +49,8 @@ KatanaTeleopKey::KatanaTeleopKey() :
   jointIndex = 0;
 
   action_client.waitForServer();
-  gripper_.waitForServer();
+  //FIXME
+  //gripper_.waitForServer();
 
   // Gets all of the joints
   XmlRpc::XmlRpcValue joint_names;
@@ -345,11 +348,15 @@ void KatanaTeleopKey::keyboardLoop()
         break;
 
       case KEYCODE_C:
-        send_gripper_action(GHPEG::GRASP);
+	//FIXME
+	//send_gripper_action(GHPEG::GRASP);
+	send_gripper_action(0);
         break;
 
       case KEYCODE_O:
-        send_gripper_action(GHPEG::RELEASE);
+	//FIXME
+	//send_gripper_action(GHPEG::RELEASE);
+	send_gripper_action(0);
         break;
     } // end switch case
 
@@ -391,52 +398,54 @@ void KatanaTeleopKey::keyboardLoop()
 
 bool KatanaTeleopKey::send_gripper_action(int32_t goal_type)
 {
-  GHPEG goal;
+  ROS_ERROR("No grasp action client implemented");
+  //FIXME: implement gripper action
+  // GHPEG goal;
 
-  switch (goal_type)
-  {
-    case GHPEG::GRASP:
-      goal.grasp.grasp_posture.name.push_back("dummy_name");
-      goal.grasp.grasp_posture.position.push_back(0.0); // angle is ignored
-      // leave velocity and effort empty
-      break;
+  // switch (goal_type)
+  // {
+  //   case GHPEG::GRASP:
+  //     goal.grasp.grasp_posture.name.push_back("dummy_name");
+  //     goal.grasp.grasp_posture.position.push_back(0.0); // angle is ignored
+  //     // leave velocity and effort empty
+  //     break;
 
-    case GHPEG::PRE_GRASP:
-      goal.grasp.pre_grasp_posture.name.push_back("dummy_name");
-      goal.grasp.pre_grasp_posture.position.push_back(0.0);
-      // leave velocity and effort empty
-      break;
+  //   case GHPEG::PRE_GRASP:
+  //     goal.grasp.pre_grasp_posture.name.push_back("dummy_name");
+  //     goal.grasp.pre_grasp_posture.position.push_back(0.0);
+  //     // leave velocity and effort empty
+  //     break;
 
-    case GHPEG::RELEASE:
-      break;
+  //   case GHPEG::RELEASE:
+  //     break;
 
-    default:
-      ROS_ERROR("unknown goal code (%d)", goal_type);
-      return false;
-  }
+  //   default:
+  //     ROS_ERROR("unknown goal code (%d)", goal_type);
+  //     return false;
+  // }
 
-  goal.goal = goal_type;
+  // goal.goal = goal_type;
 
-  bool finished_within_time = false;
-  gripper_.sendGoal(goal);
-  finished_within_time = gripper_.waitForResult(ros::Duration(10.0));
-  if (!finished_within_time)
-  {
-    gripper_.cancelGoal();
-    ROS_WARN("Timed out achieving goal!");
-    return false;
-  }
-  else
-  {
-    actionlib::SimpleClientGoalState state = gripper_.getState();
-    bool success = (state == actionlib::SimpleClientGoalState::SUCCEEDED);
-    if (success)
-      ROS_INFO("Action finished: %s",state.toString().c_str());
-    else
-      ROS_WARN("Action failed: %s",state.toString().c_str());
+  // bool finished_within_time = false;
+  // gripper_.sendGoal(goal);
+  // finished_within_time = gripper_.waitForResult(ros::Duration(10.0));
+  // if (!finished_within_time)
+  // {
+  //   gripper_.cancelGoal();
+  //   ROS_WARN("Timed out achieving goal!");
+  //   return false;
+  // }
+  // else
+  // {
+  //   actionlib::SimpleClientGoalState state = gripper_.getState();
+  //   bool success = (state == actionlib::SimpleClientGoalState::SUCCEEDED);
+  //   if (success)
+  //     ROS_INFO("Action finished: %s",state.toString().c_str());
+  //   else
+  //     ROS_WARN("Action failed: %s",state.toString().c_str());
 
-    return success;
-  }
+  //   return success;
+  // }
 
 }
 }// end namespace "katana"
