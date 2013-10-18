@@ -159,5 +159,5 @@ template<typename T>
 } // namespace katana_trajectory_filter
 
 //  PLUGINLIB_DECLARE_CLASS(package, class_name, class_type, filters::FilterBase<T>)
-PLUGINLIB_DECLARE_CLASS(katana_trajectory_filter, KatanaTrajectoryFilterFilterJointTrajectory, katana_trajectory_filter::KatanaTrajectoryFilter<arm_navigation_msgs::FilterJointTrajectory>, filters::FilterBase<arm_navigation_msgs::FilterJointTrajectory>)
-PLUGINLIB_DECLARE_CLASS(katana_trajectory_filter, KatanaTrajectoryFilterFilterJointTrajectoryWithConstraints, katana_trajectory_filter::KatanaTrajectoryFilter<arm_navigation_msgs::FilterJointTrajectoryWithConstraints>, filters::FilterBase<arm_navigation_msgs::FilterJointTrajectoryWithConstraints>)
+PLUGINLIB_DECLARE_CLASS(katana_trajectory_filter, KatanaTrajectoryFilterFilterJointTrajectory, katana_trajectory_filter::KatanaTrajectoryFilter<moveit_msgs::FilterJointTrajectory>, filters::FilterBase<moveit_msgs::FilterJointTrajectory>)
+PLUGINLIB_DECLARE_CLASS(katana_trajectory_filter, KatanaTrajectoryFilterFilterJointTrajectoryWithConstraints, katana_trajectory_filter::KatanaTrajectoryFilter<moveit_msgs::FilterJointTrajectoryWithConstraints>, filters::FilterBase<moveit_msgs::FilterJointTrajectoryWithConstraints>)
