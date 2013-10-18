@@ -72,7 +72,8 @@ int KatanaNode::loop()
   JointStatePublisher jointStatePublisher(katana);
   JointMovementActionController jointMovementActionController(katana);
   JointTrajectoryActionController jointTrajectoryActionController(katana);
-  KatanaGripperGraspController katanaGripperGraspController(katana);
+  // FIXME: (MF) readd gripperController
+  //  KatanaGripperGraspController katanaGripperGraspController(katana);
 
   while (ros::ok())
   {

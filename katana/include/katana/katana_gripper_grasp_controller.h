@@ -31,6 +31,8 @@
 
 #include <actionlib/server/simple_action_server.h>
 
+/*
+//FIXME
 #include <object_manipulation_msgs/GraspHandPostureExecutionAction.h>
 #include <object_manipulation_msgs/GraspStatus.h>
 
@@ -70,3 +72,4 @@ private:
 }
 
 #endif /* KATANA_GRIPPER_GRASP_CONTROLLER_H_ */
+

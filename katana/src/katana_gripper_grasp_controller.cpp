@@ -25,6 +25,7 @@
  *
  */
 
+/*
 #include <katana/katana_gripper_grasp_controller.h>
 
 namespace katana
@@ -164,3 +165,4 @@ bool KatanaGripperGraspController::serviceCallback(object_manipulation_msgs::Gra
 }
 
 }
+*/

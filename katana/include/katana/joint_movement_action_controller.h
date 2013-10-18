@@ -22,6 +22,7 @@
  *      Author: Henning Deeken <hdeeken@uos.de>
  */
 
+
 #ifndef JOINT_MOVEMENT_ACTION_CONTROLLER_H__
 #define JOINT_MOVEMENT_ACTION_CONTROLLER_H__
 
@@ -36,7 +37,7 @@
 #include <sensor_msgs/JointState.h>
 #include <katana_msgs/JointMovementAction.h>
 
-#include <arm_navigation_msgs/JointLimits.h>
+#include <moveit_msgs/JointLimits.h>
 
 namespace katana
 {
