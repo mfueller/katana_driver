@@ -2,5 +2,5 @@
 <launch>
   <include file="$(find katana_tutorials)/launch/trajectory_filter.launch" />
 
-  <node pkg="katana_tutorials" name="pr2_joint_trajectory_client" type="pr2_joint_trajectory_client" />
+  <node pkg="katana_tutorials" name="katanajoint_trajectory_client" type="katanajoint_trajectory_client" />
 </launch>

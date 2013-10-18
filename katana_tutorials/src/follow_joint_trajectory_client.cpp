@@ -149,28 +149,30 @@ actionlib::SimpleClientGoalState FollowJointTrajectoryClient::getState()
 trajectory_msgs::JointTrajectory FollowJointTrajectoryClient::filterJointTrajectory(
     const trajectory_msgs::JointTrajectory &input)
 {
-  ros::service::waitForService("trajectory_filter/filter_trajectory");
-  arm_navigation_msgs::FilterJointTrajectory::Request req;
-  arm_navigation_msgs::FilterJointTrajectory::Response res;
-  ros::ServiceClient filter_trajectory_client_ = nh_.serviceClient<arm_navigation_msgs::FilterJointTrajectory>(
-      "trajectory_filter/filter_trajectory");
+  // ros::service::waitForService("trajectory_filter/filter_trajectory");
+  // moveit_msgs::FilterJointTrajectory::Request req;
+  // moveit_msgs::FilterJointTrajectory::Response res;
+  // ros::ServiceClient filter_trajectory_client_ = nh_.serviceClient<moveit_msgs::FilterJointTrajectory>(
+  //     "trajectory_filter/filter_trajectory");
 
-  req.trajectory = input;
-  req.allowed_time = ros::Duration(1.0);
+  // req.trajectory = input;
+  // req.allowed_time = ros::Duration(1.0);
 
-  if (filter_trajectory_client_.call(req, res))
-  {
-    if (res.error_code.val == res.error_code.SUCCESS)
-      ROS_INFO("Requested trajectory was filtered");
-    else
-      ROS_WARN("Requested trajectory was not filtered. Error code: %d", res.error_code.val);
-  }
-  else
-  {
-    ROS_ERROR("Service call to filter trajectory failed %s", filter_trajectory_client_.getService().c_str());
-  }
-
-  return res.trajectory;
+  // if (filter_trajectory_client_.call(req, res))
+  // {
+  //   if (res.error_code.val == res.error_code.SUCCESS)
+  //     ROS_INFO("Requested trajectory was filtered");
+  //   else
+  //     ROS_WARN("Requested trajectory was not filtered. Error code: %d", res.error_code.val);
+  // }
+  // else
+  // {
+  //   ROS_ERROR("Service call to filter trajectory failed %s", filter_trajectory_client_.getService().c_str());
+  // }
+  //
+  // return res.trajectory;
+  //FIXME: use some kind of trajectory filter
+  return input;
 }
 
 } /* namespace katana_tutorials */

@@ -5,7 +5,7 @@
  *      Author: martin
  */
 
-#include <katana_tutorials/pr2_joint_trajectory_client.h>
+#include <katana_tutorials/katana_joint_trajectory_client.h>
 
 namespace katana_tutorials
 {
@@ -61,14 +61,14 @@ void Pr2JointTrajectoryClient::jointStateCB(const sensor_msgs::JointState::Const
 }
 
 //! Sends the command to start a given trajectory
-void Pr2JointTrajectoryClient::startTrajectory(pr2_controllers_msgs::JointTrajectoryGoal goal)
+void Pr2JointTrajectoryClient::startTrajectory(control_msgs::JointTrajectoryGoal goal)
 {
   // When to start the trajectory: 1s from now
   goal.trajectory.header.stamp = ros::Time::now() + ros::Duration(1.0);
   traj_client_.sendGoal(goal);
 }
 
-pr2_controllers_msgs::JointTrajectoryGoal Pr2JointTrajectoryClient::makeArmUpTrajectory()
+control_msgs::JointTrajectoryGoal Pr2JointTrajectoryClient::makeArmUpTrajectory()
 {
   const size_t NUM_TRAJ_POINTS = 4;
   const size_t NUM_JOINTS = 5;
@@ -135,7 +135,7 @@ pr2_controllers_msgs::JointTrajectoryGoal Pr2JointTrajectoryClient::makeArmUpTra
   //    }
   //  }
 
-  pr2_controllers_msgs::JointTrajectoryGoal goal;
+  control_msgs::JointTrajectoryGoal goal;
   goal.trajectory = filterJointTrajectory(trajectory);
   return goal;
 }
@@ -149,28 +149,30 @@ actionlib::SimpleClientGoalState Pr2JointTrajectoryClient::getState()
 trajectory_msgs::JointTrajectory Pr2JointTrajectoryClient::filterJointTrajectory(
     const trajectory_msgs::JointTrajectory &input)
 {
-  ros::service::waitForService("trajectory_filter/filter_trajectory");
-  arm_navigation_msgs::FilterJointTrajectory::Request req;
-  arm_navigation_msgs::FilterJointTrajectory::Response res;
-  ros::ServiceClient filter_trajectory_client_ = nh_.serviceClient<arm_navigation_msgs::FilterJointTrajectory>(
-      "trajectory_filter/filter_trajectory");
+  // ros::service::waitForService("trajectory_filter/filter_trajectory");
+  // moveit_msgs::FilterJointTrajectory::Request req;
+  // moveit_msgs::FilterJointTrajectory::Response res;
+  // ros::ServiceClient filter_trajectory_client_ = nh_.serviceClient<moveit_msgs::FilterJointTrajectory>(
+  //     "trajectory_filter/filter_trajectory");
 
-  req.trajectory = input;
-  req.allowed_time = ros::Duration(1.0);
+  // req.trajectory = input;
+  // req.allowed_time = ros::Duration(1.0);
 
-  if (filter_trajectory_client_.call(req, res))
-  {
-    if (res.error_code.val == res.error_code.SUCCESS)
-      ROS_INFO("Requested trajectory was filtered");
-    else
-      ROS_WARN("Requested trajectory was not filtered. Error code: %d", res.error_code.val);
-  }
-  else
-  {
-    ROS_ERROR("Service call to filter trajectory failed %s", filter_trajectory_client_.getService().c_str());
-  }
+  // if (filter_trajectory_client_.call(req, res))
+  // {
+  //   if (res.error_code.val == res.error_code.SUCCESS)
+  //     ROS_INFO("Requested trajectory was filtered");
+  //   else
+  //     ROS_WARN("Requested trajectory was not filtered. Error code: %d", res.error_code.val);
+  // }
+  // else
+  // {
+  //   ROS_ERROR("Service call to filter trajectory failed %s", filter_trajectory_client_.getService().c_str());
+  // }
 
-  return res.trajectory;
+  // return res.trajectory;
+  //FIXME: use some kind of trajectory filter
+  return input;
 }
 
 } /* namespace katana_tutorials */
@@ -178,7 +180,7 @@ trajectory_msgs::JointTrajectory Pr2JointTrajectoryClient::filterJointTrajectory
 int main(int argc, char** argv)
 {
   // Init the ROS node
-  ros::init(argc, argv, "pr2_joint_trajectory_client");
+  ros::init(argc, argv, "katanajoint_trajectory_client");
 
   katana_tutorials::Pr2JointTrajectoryClient arm;
   // Start the trajectory
