@@ -72,7 +72,7 @@ JointMovementAdapter::~JointMovementAdapter()
 {
 }
 
-void JointMovementAdapter::jointStateCb(const pr2_controllers_msgs::JointTrajectoryControllerStateConstPtr& state)
+void JointMovementAdapter::jointStateCb(const control_msgs::JointTrajectoryControllerStateConstPtr& state)
 {
   boost::mutex::scoped_lock lock(mutex_);
   for (unsigned int i = 0; i < state->joint_names.size(); ++i)
@@ -94,10 +94,10 @@ void JointMovementAdapter::executeCB(const JMAS::GoalConstPtr &movement_goal)
   sensor_msgs::JointState limited_joint_states = limitJointStates(movement_goal->jointGoal);
 
   // ---------- transform JointMovement goal to rough JointTrajectory goal ----------
-  pr2_controllers_msgs::JointTrajectoryGoal rough_trajectory_goal = makeRoughTrajectory(limited_joint_states);
+  control_msgs::JointTrajectoryGoal rough_trajectory_goal = makeRoughTrajectory(limited_joint_states);
 
   // ---------- generate full trajectory ----------
-  pr2_controllers_msgs::JointTrajectoryGoal full_trajectory_goal;
+  control_msgs::JointTrajectoryGoal full_trajectory_goal;
   try
   {
     full_trajectory_goal = makeFullTrajectory(rough_trajectory_goal);
@@ -151,10 +151,10 @@ void JointMovementAdapter::executeCB(const JMAS::GoalConstPtr &movement_goal)
     as_.setAborted(katana_msgs::JointMovementResult(), "Unknown result from joint_trajectory_action");
 }
 
-pr2_controllers_msgs::JointTrajectoryGoal JointMovementAdapter::makeRoughTrajectory(
+control_msgs::JointTrajectoryGoal JointMovementAdapter::makeRoughTrajectory(
                                                                                     const sensor_msgs::JointState &jointGoal)
 {
-  pr2_controllers_msgs::JointTrajectoryGoal result;
+  control_msgs::JointTrajectoryGoal result;
 
   if (jointGoal.name.size() != jointGoal.position.size())
     ROS_FATAL("joint goal: name and position array have different size!");
@@ -195,10 +195,10 @@ pr2_controllers_msgs::JointTrajectoryGoal JointMovementAdapter::makeRoughTraject
   return result;
 }
 
-pr2_controllers_msgs::JointTrajectoryGoal JointMovementAdapter::makeFullTrajectory(
-                                                                                   const pr2_controllers_msgs::JointTrajectoryGoal& goal)
+control_msgs::JointTrajectoryGoal JointMovementAdapter::makeFullTrajectory(
+                                                                                   const control_msgs::JointTrajectoryGoal& goal)
 {
-  pr2_controllers_msgs::JointTrajectoryGoal new_goal;
+  control_msgs::JointTrajectoryGoal new_goal;
   new_goal.trajectory.header = goal.trajectory.header;
   new_goal.trajectory.joint_names = goal.trajectory.joint_names;
 
@@ -257,12 +257,14 @@ pr2_controllers_msgs::JointTrajectoryGoal JointMovementAdapter::makeFullTrajecto
     }
   }
 
+  //FIXME: add trajectory generator
   // pass into trajectory generator here
-  trajectory::TrajectoryGenerator g(max_vel_, max_acc_, new_goal.trajectory.joint_names.size());
+  //trajectory::TrajectoryGenerator g(max_vel_, max_acc_, new_goal.trajectory.joint_names.size());
 
   // do the trajectory generation
-  g.generate(new_goal.trajectory, new_goal.trajectory);
+  //g.generate(new_goal.trajectory, new_goal.trajectory);
 
+  //return new_goal;
   return new_goal;
 }
 

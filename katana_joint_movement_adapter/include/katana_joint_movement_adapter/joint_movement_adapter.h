@@ -35,16 +35,16 @@
 #include <sensor_msgs/JointState.h>
 #include <katana_msgs/JointMovementAction.h>
 
-#include <arm_navigation_msgs/JointLimits.h>
+#include <moveit_msgs/JointLimits.h>
 
-#include <pr2_controllers_msgs/JointTrajectoryAction.h>
-#include <pr2_controllers_msgs/JointTrajectoryControllerState.h>
+#include <control_msgs/JointTrajectoryAction.h>
+#include <control_msgs/JointTrajectoryControllerState.h>
 
 #include <angles/angles.h>
 #include <urdf/model.h>
-#include <urdf_interface/joint.h>
+#include <urdf_model/joint.h>
 
-#include <joint_trajectory_generator/trajectory_generation.h>
+//#include <joint_trajectory_generator/trajectory_generation.h>
 
 namespace katana_joint_movement_adapter
 {
@@ -52,18 +52,18 @@ namespace katana_joint_movement_adapter
 class JointMovementAdapter
 {
   typedef actionlib::SimpleActionServer<katana_msgs::JointMovementAction> JMAS;
-  typedef actionlib::SimpleActionClient<pr2_controllers_msgs::JointTrajectoryAction> JTAC;
+  typedef actionlib::SimpleActionClient<control_msgs::JointTrajectoryAction> JTAC;
 
 public:
   JointMovementAdapter(std::string name);
   virtual ~JointMovementAdapter();
 
   void executeCB(const JMAS::GoalConstPtr &goal);
-  void jointStateCb(const pr2_controllers_msgs::JointTrajectoryControllerStateConstPtr& state);
+  void jointStateCb(const control_msgs::JointTrajectoryControllerStateConstPtr& state);
 
 private:
-  pr2_controllers_msgs::JointTrajectoryGoal makeRoughTrajectory(const sensor_msgs::JointState &jointGoal);
-  pr2_controllers_msgs::JointTrajectoryGoal makeFullTrajectory(const pr2_controllers_msgs::JointTrajectoryGoal& goal);
+  control_msgs::JointTrajectoryGoal makeRoughTrajectory(const sensor_msgs::JointState &jointGoal);
+  control_msgs::JointTrajectoryGoal makeFullTrajectory(const control_msgs::JointTrajectoryGoal& goal);
 
   sensor_msgs::JointState limitJointStates(const sensor_msgs::JointState &jointGoal);
 
