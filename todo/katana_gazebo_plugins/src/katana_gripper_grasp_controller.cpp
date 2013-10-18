@@ -25,6 +25,8 @@
  *
  */
 
+
+/* FIXME: MF grasp manipulation_msgs
 #include <katana_gazebo_plugins/katana_gripper_grasp_controller.h>
 
 namespace katana_gazebo_plugins
@@ -184,3 +186,4 @@ void KatanaGripperGraspController::getGains(double &p, double &i, double &d, dou
 
 
 }
+*/

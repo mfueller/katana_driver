@@ -33,8 +33,8 @@
 #include <spline_smoother/splines.h>
 
 #include <trajectory_msgs/JointTrajectory.h>
-#include <pr2_controllers_msgs/JointTrajectoryAction.h>
-#include <pr2_controllers_msgs/JointTrajectoryControllerState.h>
+#include <control_msgs/JointTrajectoryAction.h>
+#include <control_msgs/JointTrajectoryControllerState.h>
 
 #include <katana_gazebo_plugins/gazebo_ros_katana_gripper_action_interface.h>
 
@@ -53,7 +53,7 @@ class KatanaGripperJointTrajectoryController : public IGazeboRosKatanaGripperAct
 {
 
 private:
-  typedef actionlib::ActionServer<pr2_controllers_msgs::JointTrajectoryAction> JTAS;
+  typedef actionlib::ActionServer<control_msgs::JointTrajectoryAction> JTAS;
   typedef JTAS::GoalHandle GoalHandle;
 
 public:
