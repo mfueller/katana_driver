@@ -19,6 +19,7 @@
   </description>
   <maintainer email="look@github.com">Martin Günther, Henning Deeken</maintainer>
   <license>TBD</license>
+  <buildtool_depend>catkin</buildtool_depend>
   <export>
    <metapackage/>
  </export>
