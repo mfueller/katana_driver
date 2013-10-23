@@ -18,7 +18,8 @@
   <build_depend>convex_decomposition</build_depend>
   <build_depend>ivcon</build_depend>
   <build_depend>pr2_gazebo_plugins</build_depend>
-
+  <build_depend>ivcon</build_depend>
+  <build_depend>convex_decomposition</build_depend>
 </package>
 
 
