@@ -70,6 +70,7 @@ private:
 };
 
 }
+*/
 
 #endif /* KATANA_GRIPPER_GRASP_CONTROLLER_H_ */
 
