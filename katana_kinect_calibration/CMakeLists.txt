@@ -3,10 +3,10 @@ project(katana_kinect_calibration)
 
 find_package(catkin REQUIRED COMPONENTS roscpp rospy sensor_msgs)
 
-install(PROGRAMS
-   src/calibrate.py
-   scripts/dump_katana_joints.sh
-   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+#install(PROGRAMS
+#   src/calibrate.py
+#   scripts/dump_katana_joints.sh
+#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+#)
 
 

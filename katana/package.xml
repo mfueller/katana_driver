@@ -62,5 +62,6 @@
   <run_depend>actionlib</run_depend>
   <run_depend>roslib</run_depend>
   <run_depend>urdf</run_depend>
+  <run_depend>sensor_msgs</run_depend>
 
 </package>

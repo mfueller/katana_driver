@@ -6,7 +6,7 @@ find_package(catkin REQUIRED COMPONENTS roscpp sensor_msgs kni tf katana_msgs ac
 
 catkin_package(
   INCLUDE_DIRS include
-  CATKIN_DEPENDS roscpp kni tf katana_msgs actionlib
+  CATKIN_DEPENDS roscpp kni sensor_msgs kni tf katana_msgs actionlib urdf
 )
 
 
@@ -54,6 +54,7 @@ target_link_libraries(katana_arm_kinematics
    KNI_LM
 )
 
+add_dependencies(katana ${catkin_EXPORTED_TARGETS})
 
 install(TARGETS katana katana_arm_kinematics
    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}

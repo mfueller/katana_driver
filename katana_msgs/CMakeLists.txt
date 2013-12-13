@@ -3,6 +3,7 @@ project(katana_msgs)
 
 find_package(catkin REQUIRED COMPONENTS roscpp message_generation actionlib sensor_msgs)
 
+  
 add_message_files(
    FILES
    GripperControllerState.msg
@@ -20,3 +21,4 @@ generate_messages(
 )
 
 
+catkin_package()
