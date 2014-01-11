@@ -142,6 +142,8 @@ void AbstractKatana::refreshMotorStatus()
   // do nothing (can be overridden)
 }
 
+
+
 /* ******************************** joints + motors ******************************** */
 
 int AbstractKatana::getJointIndex(std::string joint_name)

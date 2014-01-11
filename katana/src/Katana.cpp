@@ -24,9 +24,21 @@
  */
 
 #include "katana/Katana.h"
+#include <unistd.h>
+
 
 namespace katana
 {
+
+int sign(double a) {
+	if (a >= 0) {
+		return 1;
+	} else {
+		return -1;
+	}
+}
+
+double last_velocity[6];
 
 Katana::Katana() :
   AbstractKatana()
@@ -34,6 +46,10 @@ Katana::Katana() :
   ros::NodeHandle nh;
   ros::NodeHandle pn("~");
   motor_status_.resize(NUM_MOTORS);
+
+  for (int i=0; i<6;i++) {
+	  last_velocity[i] = 0;
+  }
 
   /* ********* get parameters ********* */
 
@@ -148,7 +164,7 @@ void Katana::setLimits(void) {
 		// openGripper() and so on, and not the spline trajectories. We still set them
 		// just to be sure.
 		kni->setMotorAccelerationLimit(i, KNI_MAX_ACCELERATION);
-		kni->setMotorVelocityLimit(i, KNI_MAX_VELOCITY);
+		kni->setMotorVelocityLimit(i, 25);
 	}
 }
 
@@ -670,4 +686,107 @@ void Katana::testSpeed()
   //     (TODO: the gripper duration can be calculated from this)
 }
 
+
+
+bool Katana::moveJointVelocity(int i, double desiredVelocity) {
+
+	int vel_enc = (int)converter->vel_rad2enc(i, desiredVelocity) * 5;
+	double eps = 0.00001;
+	double delta = 0.5;
+
+	kni->setMotorVelocityLimit(i, abs(vel_enc));
+	std::cout << "velocity: " << abs(vel_enc) << std::endl;
+
+	if (desiredVelocity < -eps) {
+		if (sign(last_velocity[i]) != sign(desiredVelocity)) {
+			std::cout << "move motor " << i << " to " << motor_limits_[i].min_position << std::endl;
+			//kni->moveMotorTo(i, motor_limits_[i].min_position + delta);
+			moveJoint(i, motor_limits_[i].min_position + delta);
+
+		}
+	} else if(desiredVelocity > eps) {
+		if (sign(last_velocity[i]) != sign(desiredVelocity)) {
+			std::cout << "move motor " << i << " to " << motor_limits_[i].max_position << std::endl;
+
+			moveJoint(i, motor_limits_[i].max_position - delta);
+
+		}
+	} else {
+		int cpos_enc = kni->getMotorEncoders(i);
+		double cpos_rad = converter->angle_enc2rad(i,cpos_enc);
+		std::cout << "freeze motor " << i << std::endl;
+
+		moveJoint(i, cpos_rad);
+
+	}
+
+
+	last_velocity[i] = desiredVelocity;
+
+
+/*
+	kni->moveMotorTo( 1, 0.1);
+
+	sleep(4);
+
+	kni->setMotorVelocityLimit(1, 1);
+
+	kni->moveMotorTo( 1, 2.0);
+	sleep(1);
+
+	std::cout << "increase velocity" << std::endl;
+
+	for (int i=0; i<50; i++) {
+		kni->setMotorVelocityLimit(1, i+1);
+		usleep(50000);
+	}
+	std::cout << "reduce velocity" << std::endl;
+
+	for (int i=0; i<50; i++) {
+		kni->setMotorVelocityLimit(1, 50 - i);
+		usleep(50000);
+	}
+*/
+	//std::cout << "move back" << std::endl;
+	/*
+	for (int i=0; i<500;i++) {
+		kni->inc(1,10);
+		usleep(10000);
+	}
+	*/
+
+	/*
+	for (int i=0; i<500; i++) {
+		kni->mov(1,0.0);
+		usleep(50000);
+	}
+	*/
+
+	//std::cout << "done.." << std::endl;
+
+	/*
+	double x1, y1, z1, phi1, theta1, psi1;
+
+	kni->getCoordinates(x1, y1, z1, phi1, theta1, psi1);
+
+	std::cout << "x1: " << x1 << ", y1: " << y1 << ", z1: " << z1 << std::endl;
+
+	// create second position
+	double x2 = x1 + 100.0;
+	double y2 = y1 - 50.0;
+	double z2 = z1 + 80.0;
+	double phi2 = phi1;
+	double theta2 = theta1;
+	double psi2 = psi1;
+	// move to position 2
+
+	kni->moveRobotTo(x2, y2, z2, phi2, theta2, psi2);
+*/
+	// move linear back to position 1
+	//kni->moveRobotLinearTo(x1, y1, z1, phi1, theta1, psi1);
+
+
+
+	return true;
+}
 }

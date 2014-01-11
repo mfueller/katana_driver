@@ -64,6 +64,8 @@ public:
   virtual void setLimits(void);
   virtual void testSpeed();
 
+  virtual bool moveJointVelocity(int i, double desiredVelocity);
+
 protected:
   boost::shared_ptr<CLMBase> kni;
   boost::recursive_mutex kni_mutex;

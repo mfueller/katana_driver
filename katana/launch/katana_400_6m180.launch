@@ -14,6 +14,12 @@
 
     <param name="config_file_path" type="string" value="$(find kni)/KNI_4.3.0/configfiles400/katana6M180.cfg" />
 
+        <param name="config_file_path" type="string" value="$(find kni)/KNI_4.3.0/configfiles400/katana6M180.cfg" />
+        <param name="ip" type="string" value="192.168.88.2" />
+        <param name="port" type="string" value="5566" />
+
+        <!--<param name="simulation" type="bool" value="true" /> -->
+
     <!--<param name="simulation" type="bool" value="true" /> -->
   </node>
 

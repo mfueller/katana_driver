@@ -129,5 +129,8 @@ bool SimulatedKatana::allMotorsReady() {
   return true;
 }
 
+bool SimulatedKatana::moveJointVelocity(int i, double vel) {
+	return true;
+}
 
 }

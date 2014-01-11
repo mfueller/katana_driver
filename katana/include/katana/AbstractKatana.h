@@ -77,6 +77,7 @@ public:
   virtual bool allJointsReady() = 0;
   virtual bool allMotorsReady() = 0;
 
+  virtual bool moveJointVelocity(int i, double desiredVelocity) = 0;
 
 protected:
   // only the 5 "real" joints:

@@ -30,6 +30,8 @@
 #include <iostream>
 #include <cstdio>
 
+#include <std_msgs/String.h>
+
 namespace katana
 {
 
@@ -63,6 +65,11 @@ JointTrajectoryActionController::JointTrajectoryActionController(boost::shared_p
   serve_query_state_ = node_.advertiseService("katana_arm_controller/query_state", &JointTrajectoryActionController::queryStateService, this);
   controller_state_publisher_ = node_.advertise<control_msgs::JointTrajectoryControllerState> ("katana_arm_controller/state", 1);
 
+
+  sub_doit_ = node_.subscribe("katana_arm_controller/velocity_command", 1, &JointTrajectoryActionController::velocity_command, this);
+
+
+  std::cout << "doit here" << std::endl;
   // NOTE: current_trajectory_ is not initialized here, because that will happen in reset_trajectory_and_stop()
 
   reset_trajectory_and_stop();
@@ -95,6 +102,8 @@ void JointTrajectoryActionController::reset_trajectory_and_stop()
 
   current_trajectory_ = hold_ptr;
 }
+
+
 
 void JointTrajectoryActionController::update()
 {
@@ -404,14 +413,17 @@ static bool setsEqual(const std::vector<std::string> &a, const std::vector<std::
 {
   if (a.size() != b.size())
     return false;
-
+  //std::cout << "1" << std::endl;
   for (size_t i = 0; i < a.size(); ++i)
   {
+	//std::cout << "2 " << a[i] << ":" << count(b.begin(), b.end(), a[i]) << std::endl;
     if (count(b.begin(), b.end(), a[i]) != 1)
       return false;
   }
+  //std::cout << "3" << std::endl;
   for (size_t i = 0; i < b.size(); ++i)
   {
+	//std::cout << "3 " << i << std::endl;
     if (count(a.begin(), a.end(), b[i]) != 1)
       return false;
   }
@@ -476,11 +488,11 @@ int JointTrajectoryActionController::executeCommon(const trajectory_msgs::JointT
     ROS_ERROR("Joints on incoming goal don't match our joints");
     for (size_t i = 0; i < trajectory.joint_names.size(); i++)
     {
-      ROS_INFO("  incoming joint %d: %s", (int)i, trajectory.joint_names[i].c_str());
+      ROS_INFO("  incoming joint %d: -%s-", (int)i, trajectory.joint_names[i].c_str());
     }
     for (size_t i = 0; i < joints_.size(); i++)
     {
-      ROS_INFO("  our joint      %d: %s", (int)i, joints_[i].c_str());
+      ROS_INFO("  our joint      %d: -%s-", (int)i, joints_[i].c_str());
     }
     return control_msgs::FollowJointTrajectoryResult::INVALID_JOINTS;
   }
@@ -760,5 +772,32 @@ bool JointTrajectoryActionController::validTrajectory(const SpecifiedTrajectory 
   }
   return true;
 }
+
+char* motor_names[] = {"katana_motor1_pan_joint",
+"katana_motor2_lift_joint",
+"katana_motor3_lift_joint",
+"katana_motor4_lift_joint",
+"katana_motor5_wrist_roll_joint"};
+
+
+void JointTrajectoryActionController::velocity_command(const brics_actuator::JointVelocitiesConstPtr velocities) {
+	std::cout << "hello world" << std::endl;
+
+
+	for (int i=0; i < velocities->velocities.size(); i++) {
+		for (int index=0;index < 5; index++) {
+			std::string s = velocities->velocities[i].joint_uri;
+
+			if (strcmp(motor_names[index], s.c_str()) == 0) {
+				std::cout << "moving joint " << s << " with velocity: "<< velocities->velocities[i].value << std::endl;
+				katana_->moveJointVelocity(index, velocities->velocities[i].value);
+				break;
+			}
+		}
+	}
+	//velocities
+	//this->katana_->move
+}
+
 
 }

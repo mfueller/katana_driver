@@ -43,6 +43,10 @@
 #include <katana/SpecifiedTrajectory.h>
 #include <katana/spline_functions.h>
 
+#include <std_msgs/String.h>
+
+#include <brics_actuator/JointVelocities.h>
+
 namespace katana
 {
 
@@ -80,6 +84,8 @@ private:
   void commandCB(const trajectory_msgs::JointTrajectory::ConstPtr &msg);
   ros::Subscriber sub_command_;
 
+  ros::Subscriber sub_doit_;
+
   // "query_state" service
   bool queryStateService(control_msgs::QueryTrajectoryState::Request &req,
                          control_msgs::QueryTrajectoryState::Response &resp);
@@ -108,6 +114,9 @@ private:
   bool goalReached();
 
   bool allJointsStopped();
+
+  void velocity_command(const brics_actuator::JointVelocitiesConstPtr velocities);
+
 };
 }
 

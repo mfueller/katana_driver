@@ -48,6 +48,7 @@ KatanaTeleopKey::KatanaTeleopKey() :
 
   jointIndex = 0;
 
+  std::cout << "waiting for action server..." << std::endl;
   action_client.waitForServer();
   //FIXME
   //gripper_.waitForServer();
@@ -373,6 +374,7 @@ void KatanaTeleopKey::keyboardLoop()
       }
 
       action_client.sendGoal(goal);
+      /*  
       bool finished_within_time = action_client.waitForResult(ros::Duration(10.0));
       if (!finished_within_time)
       {
@@ -388,10 +390,10 @@ void KatanaTeleopKey::keyboardLoop()
           ROS_INFO("Action failed: %s", state.toString().c_str());
 
       }
-
+      
       movement_goal_.name.clear();
       movement_goal_.position.clear();
-
+      */
     } // end if dirty
   }
 }

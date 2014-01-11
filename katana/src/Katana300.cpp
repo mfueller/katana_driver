@@ -57,7 +57,7 @@ void Katana300::setLimits()
     // openGripper() and so on, and not the spline trajectories. We still set them
     // just to be sure.
     kni->setMotorAccelerationLimit(i, 1);
-    kni->setMotorVelocityLimit(i, 25);
+    kni->setMotorVelocityLimit(i, 2);
   }
 
 }

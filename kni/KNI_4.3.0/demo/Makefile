@@ -24,7 +24,7 @@ INVKIN_LIBRARY = $(LIBRARY_DIR)/libKNI_InvKin.a
 LM_LIBRARY = $(LIBRARY_DIR)/libKNI_LM.a
 WRAPPER_LIBRARY = $(LIBRARY_DIR)/kni.a
 
-AVAILABLE_LIBRARIES = ./common/keyboard.o  ${WRAPPER_LIBRARY} ${LM_LIBRARY} ${INVKIN_LIBRARY} ${KINE_LIBRARY} ${BASE_LIBRARY} 
+AVAILABLE_LIBRARIES = ./common/keyboard.o  ${WRAPPER_LIBRARY} ${LM_LIBRARY} ${INVKIN_LIBRARY} ${KINE_LIBRARY} ${BASE_LIBRARY}
 
 #.SILENT:
 
@@ -37,7 +37,7 @@ $(CTARGETS_D):
 
 $(TARGETS_D): $(CTARGETS_D)
 	echo "Building: $@"
-	$(CXX) $(CXXFLAGS) -I$(INCLUDE_DIR) -lpthread -o $(@:.demo=)/$(@:.demo=) $(wildcard $(@:.demo=)/*.cpp) ${AVAILABLE_LIBRARIES}
+	$(CXX) $(CXXFLAGS) -I$(INCLUDE_DIR) -pthread -o $(@:.demo=)/$(@:.demo=) $(wildcard $(@:.demo=)/*.cpp) ${AVAILABLE_LIBRARIES}
 	
 
 $(TARGETS_D_C):

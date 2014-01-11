@@ -149,6 +149,7 @@ void JointMovementActionController::executeCB(const JMAS::GoalConstPtr &goal)
 
   for (size_t i = 0; i < adjustedJointGoal.name.size(); i++)
   {
+	//katana_->moveJointVelocity(katana_->getJointIndex(adjustedJointGoal.name[i]), goal->velocity[i]);
     if (!katana_->moveJoint(katana_->getJointIndex(adjustedJointGoal.name[i]), adjustedJointGoal.position[i]))
     {
       ROS_ERROR("Problem while transferring movement to Katana arm. Aborting...");

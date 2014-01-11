@@ -46,6 +46,8 @@ public:
   virtual bool allJointsReady();
   virtual bool allMotorsReady();
 
+  virtual bool moveJointVelocity(int i, double vel);
+
 private:
   boost::shared_ptr<SpecifiedTrajectory> current_trajectory_;
 };
